@@ -7,27 +7,66 @@ const router = express.Router();
 /**
  * @swagger
  * /users:
- *   get:
- *     summary: Obtener todos los usuarios
- *     description: Retorna una lista de usuarios.
+ *   post:
+ *     summary: Crear un nuevo usuario
+ *     description: Crea un nuevo usuario con los datos proporcionados.
+ *     tags:
+ *       - Usuarios
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nombre del usuario
+ *               email:
+ *                 type: string
+ *                 description: Correo electrónico del usuario
+ *               password:
+ *                 type: string
+ *                 description: Contraseña del usuario
+ *             example:
+ *               name: 'Juan Perez'
+ *               email: 'juan.perez@example.com'
+ *               password: 'secreto123'
  *     responses:
- *       200:
- *         description: Lista de usuarios obtenida con éxito.
+ *       201:
+ *         description: Usuario creado con éxito.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                   name:
- *                     type: string
- *                   email:
- *                     type: string
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del usuario creado.
+ *                 name:
+ *                   type: string
+ *                   description: Nombre del usuario.
+ *                 email:
+ *                   type: string
+ *                   description: Correo electrónico del usuario.
+ *                 password:
+ *                   type: string
+ *                   description: Contraseña encriptada del usuario.
+ *             example:
+ *               id: '1234-abcd-5678-efgh'
+ *               name: 'Juan Perez'
+ *               email: 'juan.perez@example.com'
+ *               password: '$2a$12$k9WpNUg8KJKF1DF3AlIzKuKfmHZ84P5bxH7xkrlcAqTk'
+ *       400:
+ *         description: Error de validación en los datos de entrada.
+ *       500:
+ *         description: Error interno del servidor.
  */
 
-router.post('/register', validateUserRegistration, registerUser);
+router.post('', validateUserRegistration, registerUser);
 
 module.exports = router;
