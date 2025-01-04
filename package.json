@@ -1,8 +1,9 @@
 {
   "name": "bingo-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Una API para gestionar un sistema de Bingo online.",
   "main": "index.js",
+  
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
@@ -11,10 +12,19 @@
     "lint": "eslint src/**/*.js",
     "prettier": "prettier --write src/**/*.js",
     "build": "echo 'No build step required for this project.'",
-    "start:prod": "NODE_ENV=production node src/index.js"
+    "start:prod": "NODE_ENV=production node src/index.js",
+    "audit": "npm audit",
+    "pre-commit": "npm run lint && npm test",
+    "migrate": "sequelize db:migrate"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "bingo",
+    "api",
+    "nodejs",
+    "express",
+    "sequelize"
+  ],
+  "author": "DevCell",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -28,7 +38,6 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.11.5",
     "nodemailer": "^6.9.16",
-    "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.37.5",
@@ -36,5 +45,13 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.17.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }
