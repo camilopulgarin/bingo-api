@@ -20,5 +20,19 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  });
+    role: {
+      type: DataTypes.ENUM('player', 'admin'),
+      defaultValue: 'player',
+    },
+    is_verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  },
+  {
+    timestamps: true, // Activa los timestamps
+    createdAt: 'created_at', // Mapea createdAt a created_at
+    updatedAt: false, // Si no tienes la columna updated_at
+  }
+);
 };
