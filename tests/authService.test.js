@@ -4,8 +4,8 @@ jest.mock('../src/domain/repositories/userRepository', () => require('./mocks/us
 
 describe('User Service: authenticateUser', () => {
   it('should authenticate a user with valid credentials', async () => {
-    const email = 'john@example.com';
-    const password = 'Password123';
+    const email = 'prueba@prueba.com';
+    const password = '123456789';
     jest.spyOn(bcrypt, 'compare').mockResolvedValue(true);
 
     const user = await userService.authenticateUser(email, password);
@@ -14,8 +14,8 @@ describe('User Service: authenticateUser', () => {
   });
 
   it('should return null for invalid credentials', async () => {
-    const email = 'john@example.com';
-    const password = 'WrongPassword';
+    const email = 'prueba@prueba.com';
+    const password = '1234567892';
     jest.spyOn(bcrypt, 'compare').mockResolvedValue(false);
 
     const user = await userService.authenticateUser(email, password);
