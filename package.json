@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "mocha --exit --recursive tests/unit",
+    "test": "jest",
     "test:integration": "mocha --exit --recursive tests/integration",
     "lint": "eslint src/**/*.js",
     "prettier": "prettier --write src/**/*.js",
@@ -35,5 +35,9 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
