@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    phone: { // Nueva columna
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     timestamps: true, // Activa los timestamps
