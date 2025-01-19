@@ -11,7 +11,8 @@
     "lint": "eslint src/**/*.js",
     "prettier": "prettier --write src/**/*.js",
     "build": "echo 'No build step required for this project.'",
-    "start:prod": "NODE_ENV=production node src/index.js"
+    "start:prod": "NODE_ENV=production node src/index.js",
+    "sequelize": "npx sequelize-cli --config src/infrastructure/config/config.json --migrations-path src/infrastructure/migrations --seeders-path src/infrastructure/seeders"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
     "socket.io": "^4.8.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
