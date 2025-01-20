@@ -13,9 +13,13 @@
     "prettier": "prettier --write src/**/*.js",
     "build": "echo 'No build step required for this project.'",
     "start:prod": "NODE_ENV=production node src/index.js",
+<<<<<<< HEAD
     "audit": "npm audit",
     "pre-commit": "npm run lint && npm test",
     "migrate": "sequelize db:migrate"
+=======
+    "sequelize": "npx sequelize-cli --config src/infrastructure/config/config.json --migrations-path src/infrastructure/migrations --seeders-path src/infrastructure/seeders"
+>>>>>>> 902b3b66b59badc12ca01f90e37d637f26e098a8
   },
   "keywords": [
     "bingo",
@@ -41,6 +45,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
     "socket.io": "^4.8.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
