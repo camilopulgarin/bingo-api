@@ -19,7 +19,8 @@ module.exports = (sequelize) => {
             type: DataTypes.JSON,
             allowNull: false,
         },
-    }, {
+    },
+    {
         tableName: 'card',
         timestamps: true,
     });

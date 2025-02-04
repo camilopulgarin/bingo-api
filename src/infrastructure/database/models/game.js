@@ -15,8 +15,9 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
         },
-    }, {
-    tableName: 'game',
-    timestamps: true,
+    },
+    {
+        tableName: 'game',
+        timestamps: true,
     });
 }

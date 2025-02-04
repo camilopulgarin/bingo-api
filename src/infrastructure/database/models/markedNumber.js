@@ -19,8 +19,9 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-    }, {
-    tableName: 'markedNumber',
-    timestamps: true,
+    },
+    {
+        tableName: 'markedNumber',
+        timestamps: true,
     });
 }
