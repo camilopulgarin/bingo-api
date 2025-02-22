@@ -1,3 +1,6 @@
 [
-  "20250119233339-add-phone.js"
+  "20250119233339-add-phone.js",
+  "20250222153401-create_users.js",
+  "20250222153520-add_games.js",
+  "20250222153932-add_gameuser.js"
 ]
