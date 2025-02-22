@@ -1,38 +1,20 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define('User', {
+  return sequelize.define('Table', {
     id: {
       type: DataTypes.UUID, // Verifica si realmente necesitas UUID
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.ENUM('player', 'admin'),
-      defaultValue: 'player',
-    },
-    is_verified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    phone: { // Nueva columna
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    }
   },
   {
     timestamps: true, // Activa los timestamps
