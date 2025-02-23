@@ -2,10 +2,10 @@ const gameService = require('../../domain/services/gameService');
 
 const createGame = async (req, res) => {
   try {
-    const { name, capacity } = req.body;
+    const { name, capacity, userIds } = req.body;
     const creatorId = req.user.id; // ID del usuario autenticado
 
-    const game = await gameService.createGame({ name, capacity, creatorId });
+    const game = await gameService.createGame({ name, capacity, creatorId, userIds});
 
     res.status(201).json({ message: 'Game created successfully', game });
   } catch (error) {
