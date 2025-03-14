@@ -9,4 +9,8 @@ const registerUser = async ({ name, email, password }) => {
   return userRepository.create({ name, email, password: hashedPassword });
 };
 
-module.exports = { registerUser };
+const getUsers = async () => {
+  return userRepository.findAll();
+};
+
+module.exports = { registerUser, getUsers };

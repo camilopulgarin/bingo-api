@@ -4,4 +4,6 @@ const findByEmail = async (email) => User.findOne({ where: { email } });
 
 const create = async (userData) => User.create(userData);
 
-module.exports = { findByEmail, create };
+const findAll = async () => User.findAll({ attributes: ['id', 'name', 'email'] });
+
+module.exports = { findByEmail, create, findAll };
