@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser } = require('../controllers/userController');
+const { registerUser, getUsers } = require('../controllers/userController');
 const { validateUserRegistration } = require('../validators/userValidator');
 
 const router = express.Router();
@@ -68,5 +68,45 @@ const router = express.Router();
  */
 
 router.post('', validateUserRegistration, registerUser);
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Obtener la lista de usuarios
+ *     description: Retorna una lista de todos los usuarios registrados en el sistema.
+ *     tags:
+ *       - Usuarios
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios obtenida con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     description: ID del usuario.
+ *                   name:
+ *                     type: string
+ *                     description: Nombre del usuario.
+ *                   email:
+ *                     type: string
+ *                     description: Correo electrónico del usuario.
+ *             example:
+ *               - id: "1234-abcd-5678-efgh"
+ *                 name: "Juan Perez"
+ *                 email: "juan.perez@example.com"
+ *               - id: "5678-wxyz-1234-klmn"
+ *                 name: "Maria Gomez"
+ *                 email: "maria.gomez@example.com"
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+router.get('', getUsers);
 
 module.exports = router;
