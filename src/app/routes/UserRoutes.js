@@ -1,6 +1,7 @@
 const express = require('express');
 const { registerUser, getUsers } = require('../controllers/userController');
 const { validateUserRegistration } = require('../validators/userValidator');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -107,6 +108,6 @@ router.post('', validateUserRegistration, registerUser);
  *         description: Error interno del servidor.
  */
 
-router.get('', getUsers);
+router.get('',authMiddleware, getUsers);
 
 module.exports = router;
