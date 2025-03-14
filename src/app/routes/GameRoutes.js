@@ -22,6 +22,7 @@ const router = express.Router();
  *             required:
  *               - name
  *               - capacity
+ *               - userIds
  *             properties:
  *               name:
  *                 type: string
@@ -30,9 +31,15 @@ const router = express.Router();
  *                 type: integer
  *                 description: Capacidad máxima de jugadores
  *                 minimum: 1
+ *               userIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Lista de IDs de usuarios que participarán en la partida.
  *             example:
  *               name: 'Aventura en la jungla'
  *               capacity: 5
+ *               userIds: ['1234-abcd', '5678-efgh', '9876-zyxw']
  *     responses:
  *       201:
  *         description: Partida creada con éxito.
@@ -53,11 +60,17 @@ const router = express.Router();
  *                 creator_id:
  *                   type: string
  *                   description: ID del usuario que creó la partida.
+ *                 userIds:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: Lista de IDs de usuarios en la partida.
  *             example:
  *               id: '1234-abcd-5678-efgh'
  *               name: 'Aventura en la jungla'
  *               capacity: 5
  *               creator_id: '9876-zyxw-5432-vutq'
+ *               userIds: ['1234-abcd', '5678-efgh', '9876-zyxw']
  *       400:
  *         description: Error de validación en los datos de entrada.
  *       401:
