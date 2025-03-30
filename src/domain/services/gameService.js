@@ -10,8 +10,8 @@ const createGame = async ({ name, capacity, creatorId, userIds }) => {
   return game;
 };
 
-const getUserGames = async (userId) => {
-  return gameRepository.findByUserId(userId);
+const getUserGames = async (userId, page, limit) => {
+  return gameRepository.findByUserId(userId, page, limit);
 };
 
 module.exports = { createGame, getUserGames };

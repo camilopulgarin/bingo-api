@@ -15,10 +15,12 @@ const createGame = async (req, res) => {
 
 const getUserGames = async (req, res) => {
   try {
-    const userId = req.user.id; // ID del usuario autenticado
-    const games = await gameService.getUserGames(userId);
+    const userId = req.user.id;
+    const { page = 1, limit = 10 } = req.query;
 
-    res.status(200).json({ games });
+    const paginatedGames = await gameService.getUserGames(userId, page, limit);
+
+    res.status(200).json(paginatedGames);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
