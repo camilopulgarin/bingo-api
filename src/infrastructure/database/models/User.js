@@ -6,6 +6,7 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID, // Verifica si realmente necesitas UUID
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -27,12 +28,12 @@ module.exports = (sequelize) => {
     is_verified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-    },
+    }
   },
   {
     timestamps: true, // Activa los timestamps
     createdAt: 'created_at', // Mapea createdAt a created_at
-    updatedAt: false, // Si no tienes la columna updated_at
+    updatedAt: 'updated_at', // Si no tienes la columna updated_at
   }
 );
 };

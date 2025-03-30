@@ -160,6 +160,12 @@ Swagger está disponible en [http://localhost:3000/api-docs](http://localhost:30
 
 ---
 
+## Migrations
+
+- **`npm run sequelize -- migration:generate --name migration_name`**: crear una nueva migración.
+- **`npm run sequelize -- db:migrate`**: aplicar los cambios  del archivo de migración.
+- **`npm run sequelize -- db:migrate:undo:all`**: Elimina todas las migraciones.
+
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.

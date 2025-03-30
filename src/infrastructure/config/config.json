@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "bingo_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "migrationStorage": "json",
+    "migrationStoragePath": "src/infrastructure/migrations-meta.json",
+    "seederStorage": "json",
+    "seederStoragePath": "src/infrastructure/seeders-meta.json"
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "bingo_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "migrationStorage": "json",
+    "migrationStoragePath": "src/infrastructure/migrations-meta.json",
+    "seederStorage": "json",
+    "seederStoragePath": "src/infrastructure/seeders-meta.json"
+  },
+  "production": {
+    "username": "root",
+    "password": "root",
+    "database": "bingo_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "migrationStorage": "json",
+    "migrationStoragePath": "src/infrastructure/migrations-meta.json",
+    "seederStorage": "json",
+    "seederStoragePath": "src/infrastructure/seeders-meta.json"
+  }
+}
