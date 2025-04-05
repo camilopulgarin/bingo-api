@@ -19,4 +19,22 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { login };
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.user?.id; // Asume que `req.user` viene del middleware de autenticación
+    console.log("userId", userId);
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Both current and new passwords are required' });
+    }
+
+    await authService.changeUserPassword(userId, currentPassword, newPassword);
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(error.status || 500).json({ message: error.message || 'Internal Server Error' });
+  }
+};
+
+module.exports = { login, changePassword };
