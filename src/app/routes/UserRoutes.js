@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, getUsers } = require('../controllers/userController');
+const { registerUser, getUsers, userInfo } = require('../controllers/userController');
 const { validateUserRegistration } = require('../validators/userValidator');
 const authMiddleware = require('../middlewares/authMiddleware');
 
@@ -109,5 +109,39 @@ router.post('', validateUserRegistration, registerUser);
  */
 
 router.get('',authMiddleware, getUsers);
+
+/**
+ * @swagger
+ * /users/info:
+ *   get:
+ *     summary: Obtener información del usuario autenticado
+ *     description: Retorna la información del usuario autenticado.
+ *     tags:
+ *       - Usuarios
+ *     responses:
+ *       200:
+ *         description: Información del usuario obtenida con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del usuario.
+ *                 name:
+ *                   type: string
+ *                   description: Nombre del usuario.
+ *                 email:
+ *                   type: string
+ *                   description: Correo electrónico del usuario.
+ *             example:
+ *               - id: "1234-abcd-5678-efgh"
+ *                 name: "Juan Perez"
+ *                 email: "juan.perez@example.com"
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get('/info',authMiddleware, userInfo);
 
 module.exports = router;
