@@ -53,7 +53,7 @@ router.post('/login', validateLogin, login);
 /**
  * @swagger
  * /auth/change-password:
- *   post:
+ *   put:
  *     summary: Cambiar contraseña
  *     description: Permite a un usuario autenticado cambiar su contraseña actual por una nueva.
  *     tags:
@@ -99,6 +99,6 @@ router.post('/login', validateLogin, login);
  *       500:
  *         description: Error interno del servidor.
  */
-router.post('/change-password', authMiddleware, changePassword);
+router.put('/change-password', authMiddleware, changePassword);
 
 module.exports = router;

@@ -13,4 +13,10 @@ const getUsers = async () => {
   return userRepository.findAll();
 };
 
-module.exports = { registerUser, getUsers };
+const getUserById = async (userId) => {
+  const user = await userRepository.findById(userId);
+  if (!user) throw new Error('User not found');
+  return user;
+}
+
+module.exports = { registerUser, getUsers, getUserById };
