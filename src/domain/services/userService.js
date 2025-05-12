@@ -19,4 +19,14 @@ const getUserById = async (userId) => {
   return user;
 }
 
-module.exports = { registerUser, getUsers, getUserById };
+const updateUser = async (userId, { name }) => {
+  const user = await userRepository.findById(userId);
+  if (!user) throw new Error('User not found');
+
+  const updatedData = {};
+  if (name) updatedData.name = name;
+
+  return userRepository.update(userId, updatedData);
+};
+
+module.exports = { registerUser, getUsers, getUserById, updateUser };

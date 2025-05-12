@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, getUsers, userInfo } = require('../controllers/userController');
+const { registerUser, getUsers, userInfo, updateUser } = require('../controllers/userController');
 const { validateUserRegistration } = require('../validators/userValidator');
 const authMiddleware = require('../middlewares/authMiddleware');
 
@@ -143,5 +143,76 @@ router.get('',authMiddleware, getUsers);
  *         description: Error interno del servidor.
  */
 router.get('/info',authMiddleware, userInfo);
+
+/**
+ * @swagger
+ * /users:
+ *   put:
+ *     summary: Actualizar un usuario existente
+ *     description: Actualiza los datos de un usuario con la información proporcionada.
+ *     tags:
+ *       - Usuarios
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - name
+ *               - email
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: ID del usuario a actualizar
+ *               name:
+ *                 type: string
+ *                 description: Nombre del usuario
+ *               email:
+ *                 type: string
+ *                 description: Correo electrónico del usuario
+ *               password:
+ *                 type: string
+ *                 description: Nueva contraseña del usuario (opcional)
+ *             example:
+ *               id: '1234-abcd-5678-efgh'
+ *               name: 'Juan Perez'
+ *               email: 'juan.perez@example.com'
+ *               password: 'nuevoSecreto123'
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: ID del usuario actualizado.
+ *                 name:
+ *                   type: string
+ *                   description: Nombre del usuario.
+ *                 email:
+ *                   type: string
+ *                   description: Correo electrónico del usuario.
+ *                 password:
+ *                   type: string
+ *                   description: Contraseña encriptada del usuario.
+ *             example:
+ *               id: '1234-abcd-5678-efgh'
+ *               name: 'Juan Perez'
+ *               email: 'juan.perez@example.com'
+ *               password: '$2a$12$k9WpNUg8KJKF1DF3AlIzKuKfmHZ84P5bxH7xkrlcAqTk'
+ *       400:
+ *         description: Error de validación en los datos de entrada.
+ *       404:
+ *         description: Usuario no encontrado.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
+router.put('', authMiddleware, updateUser);
 
 module.exports = router;
