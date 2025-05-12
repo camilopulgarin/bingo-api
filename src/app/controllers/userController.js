@@ -33,4 +33,18 @@ const userInfo = async (req, res) => {
   }
 }
 
-module.exports = { registerUser, getUsers, userInfo };
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming you have user ID in req.user
+    const { name } = req.body;
+    const updatedUser = await userService.updateUser(userId, { name });
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+module.exports = { registerUser, getUsers, userInfo, updateUser };
