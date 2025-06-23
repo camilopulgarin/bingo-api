@@ -19,6 +19,18 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM('playing', 'won', 'lost'),
       defaultValue: 'playing',
     },
+    selected_tables: {
+      type: DataTypes.JSON,
+      allowNull: true, // se llena cuando el usuario ingresa
+    },
+    game_mode_vote: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    board_count: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   }, {
     timestamps: true,
     createdAt: 'created_at',

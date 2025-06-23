@@ -23,4 +23,25 @@ const findByUserId = async (userId, page, limit) => {
   }, page, limit);
 };
 
-module.exports = { create, findByUserId, addUsersToGame };
+const upsertGameUser = async (data) => {
+  const [record, created] = await GameUser.upsert(data);
+  return record;
+};
+
+const getGameUser = async (gameId, userId) => {
+  return await GameUser.findOne({
+    where: { game_id: gameId, user_id: userId },
+  });
+};
+
+const updateGameUser = async (gameId, userId, fieldsToUpdate) => {
+  await GameUser.update(fieldsToUpdate, {
+    where: { game_id: gameId, user_id: userId },
+  });
+
+  return await GameUser.findOne({
+    where: { game_id: gameId, user_id: userId },
+  });
+};
+
+module.exports = { create, findByUserId, addUsersToGame, upsertGameUser, getGameUser, updateGameUser };
