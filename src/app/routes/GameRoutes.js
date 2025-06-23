@@ -1,7 +1,12 @@
-const express = require('express');
-const { createGame, getUserGames } = require('../controllers/gameController');
-const { validateGameCreation } = require('../validators/gameValidator');
-const authMiddleware = require('../middlewares/authMiddleware');
+const express = require("express");
+const {
+  createGame,
+  getUserGames,
+  joinGame,
+  getPlayerGameInfo,
+} = require("../controllers/gameController");
+const { validateGameCreation } = require("../validators/gameValidator");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -79,7 +84,7 @@ const router = express.Router();
  *         description: Error interno del servidor.
  */
 
-router.post('', authMiddleware, validateGameCreation, createGame);
+router.post("", authMiddleware, validateGameCreation, createGame);
 
 /**
  * @swagger
@@ -121,7 +126,7 @@ router.post('', authMiddleware, validateGameCreation, createGame);
  *         description: No autorizado, token inválido o no proporcionado.
  *       500:
  *         description: Error interno del servidor.
- * 
+ *
  * components:
  *   schemas:
  *     Game:
@@ -150,6 +155,89 @@ router.post('', authMiddleware, validateGameCreation, createGame);
  *         capacity: 5
  *         creator_id: '9876-zyxw-5432-vutq'
  */
-router.get('',authMiddleware, getUserGames);
+router.get("", authMiddleware, getUserGames);
+
+/**
+ * @swagger
+ * /games/join:
+ *   patch:
+ *     summary: Actualizar información del jugador en una partida
+ *     description: Modifica las tablas seleccionadas, el modo de juego votado y la cantidad de tablas del jugador en una partida.
+ *     tags:
+ *       - Partidas
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - gameId
+ *               - selectedTables
+ *               - gameModeVote
+ *             properties:
+ *               gameId:
+ *                 type: string
+ *                 format: uuid
+ *               selectedTables:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     numbers:
+ *                       type: array
+ *                       items:
+ *                         type: integer
+ *               gameModeVote:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Información del jugador actualizada correctamente.
+ *       400:
+ *         description: Datos inválidos.
+ *       401:
+ *         description: No autorizado.
+ *       404:
+ *         description: No se encontró la participación del jugador en la partida.
+ */
+
+router.patch("/join", authMiddleware, joinGame);
+
+/**
+ * @swagger
+ * /games/{gameId}/player-info:
+ *   get:
+ *     summary: Obtener la información del jugador en una partida
+ *     description: Devuelve los datos que el jugador ha registrado en una partida específica (tablas seleccionadas, voto, etc.).
+ *     tags:
+ *       - Partidas
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: gameId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: UUID de la partida.
+ *     responses:
+ *       200:
+ *         description: Datos del jugador obtenidos correctamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GameUser'
+ *       401:
+ *         description: No autorizado.
+ *       404:
+ *         description: El jugador no está registrado en esta partida.
+ */
+
+router.get("/:gameId/player-info", authMiddleware, getPlayerGameInfo);
 
 module.exports = router;

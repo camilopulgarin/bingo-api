@@ -2,5 +2,8 @@
   "20250119233339-add-phone.js",
   "20250222153401-create_users.js",
   "20250222153520-add_games.js",
-  "20250222153932-add_gameuser.js"
+  "20250222153932-add_gameuser.js",
+  "20250621162856-add_gameUser_columns.js",
+  "20250621163343-add_gameUser_new_columns.js",
+  "20250621163756-add_gameUser_new_columns_2.js"
 ]
