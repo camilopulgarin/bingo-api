@@ -186,8 +186,6 @@ router.get("", authMiddleware, getUserGames);
  *                 items:
  *                   type: object
  *                   properties:
- *                     id:
- *                       type: integer
  *                     numbers:
  *                       type: array
  *                       items:
