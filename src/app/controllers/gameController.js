@@ -49,9 +49,6 @@ const getPlayerGameInfo = async (req, res) => {
     const userId = req.user.id;
     const { gameId } = req.params;
 
-    console.log('gameId:', gameId);
-    console.log('userId:', userId);
-
     const playerData = await gameService.getPlayerGameInfo(gameId, userId);
 
     res.status(200).json(playerData);
