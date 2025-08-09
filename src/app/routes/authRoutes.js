@@ -28,8 +28,8 @@ const router = express.Router();
  *                 type: string
  *                 description: Contraseña del usuario.
  *             example:
- *               email: 'usuario@example.com'
- *               password: 'password123'
+ *               email: 'prueba@prueba.com'
+ *               password: '123456789'
  *     responses:
  *       200:
  *         description: Inicio de sesión exitoso.
