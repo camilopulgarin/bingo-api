@@ -9,6 +9,14 @@ const addUsersToGame = async (gameId, userIds) => {
   await GameUser.bulkCreate(gameUsers);
 };
 
+const updateGame = async (gameId, fieldsToUpdate) => {
+  await Game.update(fieldsToUpdate, {
+    where: { id: gameId },
+  });
+
+  return await Game.findByPk(gameId);
+};
+
 const findByUserId = async (userId, page, limit) => {
   return paginate(Game, {
     include: [
@@ -38,6 +46,8 @@ const updateGameUser = async (gameId, userId, fieldsToUpdate) => {
   await GameUser.update(fieldsToUpdate, {
     where: { game_id: gameId, user_id: userId },
   });
+
+  await Game.update({ status: "configured" }, { where: { id: gameId } });
 
   return await GameUser.findOne({
     where: { game_id: gameId, user_id: userId },
