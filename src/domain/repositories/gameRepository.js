@@ -47,7 +47,7 @@ const updateGameUser = async (gameId, userId, fieldsToUpdate) => {
     where: { game_id: gameId, user_id: userId },
   });
 
-  await Game.update({ status: "configured" }, { where: { id: gameId } });
+  await Game.update({ status: 'configured' }, { where: { id: gameId } });
 
   return await GameUser.findOne({
     where: { game_id: gameId, user_id: userId },

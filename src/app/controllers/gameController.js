@@ -49,6 +49,8 @@ const getPlayerGameInfo = async (req, res) => {
     const userId = req.user.id;
     const { gameId } = req.params;
 
+    console.log('Fetching player game info for user:', userId, 'in game:', gameId);
+
     const playerData = await gameService.getPlayerGameInfo(gameId, userId);
 
     res.status(200).json(playerData);
