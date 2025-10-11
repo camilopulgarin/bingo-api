@@ -3,6 +3,7 @@ const UserModel = require('./User');
 const TableModel = require('./Table');
 const GameModel = require('./Game');
 const GameUserModel = require('./GameUser');
+const BingoBoardModel = require('./BingoBoard');
 
 const sequelize = new Sequelize(process.env.DB_URL || 'mysql://root:root@localhost:3306/bingo_db');
 
@@ -11,6 +12,7 @@ const User = UserModel(sequelize);
 const Table = TableModel(sequelize);
 const Game = GameModel(sequelize);
 const GameUser = GameUserModel(sequelize);
+const BingoBoard = BingoBoardModel(sequelize);
 
 // Asociaciones de modelos (si es necesario)
 // Ejemplo: User.hasMany(Post);
@@ -27,4 +29,5 @@ module.exports = {
   Table,
   Game,
   GameUser,
+  BingoBoard
 };
