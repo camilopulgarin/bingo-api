@@ -1,5 +1,5 @@
 const gameRepository = require('../repositories/gameRepository');
-
+const BingoBoardRepository = require('../repositories/BingoBoardRepository');
 const createGame = async ({ name, capacity, creatorId, userIds }) => {
   const game = await gameRepository.create({ name, capacity, creator_id: creatorId });
 
@@ -23,11 +23,41 @@ const joinGame = async ({ userId, gameId, selectedTables, gameModeVote }) => {
     board_count: boardCount,
   });
 
-  return updatedGameUser;
+  // Inserta cada tabla en BingoBoard
+  const boards = await Promise.all(selectedTables.map(async (table) => {
+    return await BingoBoardRepository.createBoard({
+      user_id: userId,
+      game_id: gameId,
+      numbers: table, // ahora se pasa la tabla completa
+    });
+  }));
+
+  return {
+    ...updatedGameUser.dataValues,
+    boards: boards.map(board => ({
+      id: board.id,
+      numbers: board.numbers,
+    })),
+  };
 };
 
 const getPlayerGameInfo = async (gameId, userId) => {
-  return await gameRepository.getGameUser(gameId, userId);
+  const gameUser = await gameRepository.getGameUser(gameId, userId);
+
+  // Obtén las tablas del usuario en la partida
+  const boards = await BingoBoardRepository.findBoardsByUserAndGame(userId, gameId);
+
+  return {
+    ...gameUser.dataValues,
+    boards: boards.map(board => ({
+      id: board.id,
+      numbers: board.numbers,
+    })),
+  };
 };
 
-module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame };
+const getBoardById = async (boardId) => {
+  return await BingoBoardRepository.findBoardById(boardId);
+};
+
+module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById };
