@@ -44,7 +44,6 @@ const setupSocket = (server) => {
     console.log('User claimed bingo with board:', board);
     if (!board) {
       socket.emit('bingoResult', { success: false, message: 'Tabla no encontrada.' });
-      startDrawingBalls(io); // Reanuda el sorteo
       return;
     }
 
@@ -59,9 +58,10 @@ const setupSocket = (server) => {
       }
     });
 
+    console.log('Extracted numbers from board:', numbers);
+
     if (numbers.length !== 24) { // 5x5 menos el centro
       socket.emit('bingoResult', { success: false, message: 'Tabla inválida o incompleta.' });
-      startDrawingBalls(io);
       return;
     }
     console.log('Verifying numbers:', numbers, 'against drawn balls:', drawnBalls);
@@ -93,6 +93,7 @@ const startDrawingBalls = (io) => {
 
   gameInterval = setInterval(() => {
     if (index < shuffledBalls.length) {
+      console.log("BALL LIST: ", drawnBalls);
       const ball = shuffledBalls[index];
       drawnBalls.push(ball);
       console.log('Drawing ball:', ball);
@@ -103,7 +104,7 @@ const startDrawingBalls = (io) => {
       console.log('Game over, all balls drawn');
       io.emit('gameOver', drawnBalls);
     }
-  }, 7000);
+  }, 5000);
 };
 
 module.exports = { setupSocket };
