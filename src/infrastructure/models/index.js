@@ -1,13 +1,23 @@
 'use strict';
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+let config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+
+// Si los valores son 'env', usa los del .env
+config = {
+  ...config,
+  username: config.username === 'env' ? process.env.MYSQL_USER : config.username,
+  password: config.password === 'env' ? process.env.MYSQL_PASSWORD : config.password,
+  database: config.database === 'env' ? process.env.MYSQL_DB : config.database,
+  host: config.host === 'env' ? process.env.MYSQL_HOST : config.host,
+};
 
 let sequelize;
 if (config.use_env_variable) {
