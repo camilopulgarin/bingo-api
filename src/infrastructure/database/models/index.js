@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { Sequelize } = require('sequelize');
 const UserModel = require('./User');
 const TableModel = require('./Table');
@@ -5,12 +7,12 @@ const GameModel = require('./Game');
 const GameUserModel = require('./GameUser');
 const BingoBoardModel = require('./BingoBoard');
 
-const dbUser = process.env.MYSQL_USER || 'root';
-const dbPassword = process.env.MYSQL_PASSWORD || 'root';
+const dbUser = process.env.MYSQL_USER || 'root2';
+const dbPassword = process.env.MYSQL_PASSWORD || 'root2';
 const dbHost = process.env.MYSQL_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || '3306';
 const dbName = process.env.MYSQL_DB || 'bingo_db';
-
+console.log("DB CONNECTION INFO:", {dbUser, dbPassword, dbHost, dbPort, dbName});
 const dbUrl = `mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
 const sequelize = new Sequelize(process.env.DB_URL || dbUrl);
 
