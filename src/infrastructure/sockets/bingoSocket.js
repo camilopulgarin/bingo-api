@@ -52,12 +52,10 @@ const setupSocket = (server) => {
       const result = validateWinningBoard(board, drawnBalls);
       console.log('Validación de bingo:', result);
 
-      if (result.hasWon || true) {
+      if (result.hasWon) {
         // Actualiza el estado de la partida y el ganador
-        console.log('SOCKET:', gameId, 'winner:', userId);
         if (gameId) {
-          const updateGame = await setGameWinner(gameId, userId);
-          console.log('Game updated with winner:', updateGame);
+           await setGameWinner(gameId, userId);
         }
         io.emit('winnerConfirmed', { userId, pattern: result.pattern });
         socket.emit('bingoResult', { success: true, message: `¡Bingo válido! Patrón: ${result.pattern}` });
