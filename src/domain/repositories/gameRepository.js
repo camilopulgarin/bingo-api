@@ -54,4 +54,10 @@ const updateGameUser = async (gameId, userId, fieldsToUpdate) => {
   });
 };
 
-module.exports = { create, findByUserId, addUsersToGame, upsertGameUser, getGameUser, updateGameUser };
+const setGameWinner = async (gameId, winnerId) => {
+  await Game.update({ status: 'completed', winner: winnerId }, { where: { id: gameId } });
+  console.log('Setting game winner for game:', gameId, 'winner:', winnerId);
+  return await Game.findByPk(gameId);
+};
+
+module.exports = { create, findByUserId, addUsersToGame, upsertGameUser, getGameUser, updateGameUser, setGameWinner };

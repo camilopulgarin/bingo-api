@@ -60,4 +60,9 @@ const getBoardById = async (boardId) => {
   return await BingoBoardRepository.findBoardById(boardId);
 };
 
-module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById };
+const setGameWinner = async (gameId, winnerId) => {
+  console.log('Setting game winner for game:', gameId, 'winner:', winnerId);
+  return await gameRepository.setGameWinner(gameId, winnerId);
+};
+
+module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById, setGameWinner };

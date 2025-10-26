@@ -12,7 +12,7 @@
     "prettier": "prettier --write src/**/*.js",
     "build": "echo 'No build step required for this project.'",
     "start:prod": "NODE_ENV=production node src/index.js",
-    "sequelize": "npx sequelize-cli --config src/infrastructure/config/config.json --migrations-path src/infrastructure/migrations --seeders-path src/infrastructure/seeders"
+  "sequelize": "npx dotenv -e .env -- npx sequelize-cli --config src/infrastructure/config/config.js --migrations-path src/infrastructure/migrations --seeders-path src/infrastructure/seeders"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +40,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "dotenv-cli": "^10.0.0",
     "jest": "^29.7.0",
     "supertest": "^7.1.1"
   }

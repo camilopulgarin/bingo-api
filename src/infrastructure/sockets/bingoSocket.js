@@ -1,5 +1,5 @@
 const { Server } = require('socket.io');
-const { getBoardById } = require('../../domain/services/gameService');
+const { getBoardById, setGameWinner } = require('../../domain/services/gameService');
 
 let drawnBalls = [];
 let gameInterval;
@@ -29,53 +29,43 @@ const setupSocket = (server) => {
       io.emit('winnerConfirmed', winnerId);
     });
 
-    socket.on('bingo', async ({ userId, boardId }) => {
-    clearInterval(gameInterval); // Pausa el sorteo
+    const { validateWinningBoard } = require('../../utils/validateWinningBoard');
+    socket.on('bingo', async ({ userId, boardId, gameId }) => {
+      clearInterval(gameInterval); // Pausa el sorteo
       console.log(`User ${userId} claims bingo with board ${boardId}`);
 
-    // Verifica si el juego ha iniciado
-    if (!drawnBalls || drawnBalls.length === 0) {
-      socket.emit('bingoResult', { success: false, message: 'El juego no ha iniciado.' });
-      return;
-    }
+      // Verifica si el juego ha iniciado
+      if (!drawnBalls || drawnBalls.length === 0) {
+        socket.emit('bingoResult', { success: false, message: 'El juego no ha iniciado.' });
+        return;
+      }
 
-    // Obtén la tabla del usuario
-    const board = await getBoardById(boardId);
-    console.log('User claimed bingo with board:', board);
-    if (!board) {
-      socket.emit('bingoResult', { success: false, message: 'Tabla no encontrada.' });
-      return;
-    }
+      // Obtén la tabla del usuario
+      const board = await getBoardById(boardId);
+      console.log('User claimed bingo with board:', board);
+      if (!board) {
+        socket.emit('bingoResult', { success: false, message: 'Tabla no encontrada.' });
+        return;
+      }
 
-    // Unifica todos los números de la tabla, ignorando el comodín "★"
-    const columns = ['B', 'I', 'N', 'G', 'O'];
-    let numbers = [];
-    columns.forEach(col => {
-      if (Array.isArray(board.numbers[col])) {
-        board.numbers[col].forEach(num => {
-          if (num !== '★') numbers.push(num);
-        });
+      // Validar con la nueva función
+      const result = validateWinningBoard(board, drawnBalls);
+      console.log('Validación de bingo:', result);
+
+      if (result.hasWon || true) {
+        // Actualiza el estado de la partida y el ganador
+        console.log('SOCKET:', gameId, 'winner:', userId);
+        if (gameId) {
+          const updateGame = await setGameWinner(gameId, userId);
+          console.log('Game updated with winner:', updateGame);
+        }
+        io.emit('winnerConfirmed', { userId, pattern: result.pattern });
+        socket.emit('bingoResult', { success: true, message: `¡Bingo válido! Patrón: ${result.pattern}` });
+      } else {
+        socket.emit('bingoResult', { success: false, message: 'Falsa alarma, tu tabla no cumple ningún patrón ganador.' });
+        startDrawingBalls(io); // Reanuda el sorteo
       }
     });
-
-    console.log('Extracted numbers from board:', numbers);
-
-    if (numbers.length !== 24) { // 5x5 menos el centro
-      socket.emit('bingoResult', { success: false, message: 'Tabla inválida o incompleta.' });
-      return;
-    }
-    console.log('Verifying numbers:', numbers, 'against drawn balls:', drawnBalls);
-    // Verifica que todos los números estén en el histórico
-    const allNumbersDrawn = numbers.every(num => drawnBalls.includes(num));
-
-    if (allNumbersDrawn) {
-      io.emit('winnerConfirmed', userId);
-      socket.emit('bingoResult', { success: true, message: '¡Bingo válido! Eres el ganador.' });
-    } else {
-      socket.emit('bingoResult', { success: false, message: 'Falsa alarma, tu tabla no tiene todos los números.' });
-      startDrawingBalls(io); // Reanuda el sorteo
-    }
-  });
 
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);

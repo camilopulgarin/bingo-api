@@ -1,6 +1,6 @@
 require('dotenv').config();
 const env = process.env.NODE_ENV || 'development';
-const configJson = require('./config.json');
+const configJson = require('./config.js');
 const baseConfig = configJson[env];
 
 module.exports = {
