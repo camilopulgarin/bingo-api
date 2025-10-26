@@ -1,4 +1,16 @@
 const gameService = require('../../domain/services/gameService');
+const getFinishedGameDetail = async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    const gameDetail = await gameService.getFinishedGameDetail(gameId);
+    if (!gameDetail) {
+      return res.status(404).json({ message: 'Game not found or not finished' });
+    }
+    res.status(200).json(gameDetail);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const createGame = async (req, res) => {
   try {
@@ -61,4 +73,4 @@ const getPlayerGameInfo = async (req, res) => {
 };
 
 
-module.exports = { createGame, getUserGames, joinGame, getPlayerGameInfo };
+module.exports = { createGame, getUserGames, joinGame, getPlayerGameInfo, getFinishedGameDetail };

@@ -60,4 +60,8 @@ const setGameWinner = async (gameId, winnerId) => {
   return await Game.findByPk(gameId);
 };
 
-module.exports = { create, findByUserId, addUsersToGame, upsertGameUser, getGameUser, updateGameUser, setGameWinner };
+const findById = async (gameId) => {
+  return await Game.findByPk(gameId);
+};
+
+module.exports = { create, findByUserId, addUsersToGame, upsertGameUser, getGameUser, updateGameUser, setGameWinner, findById };

@@ -65,4 +65,28 @@ const setGameWinner = async (gameId, winnerId) => {
   return await gameRepository.setGameWinner(gameId, winnerId);
 };
 
-module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById, setGameWinner };
+const userRepository = require('../repositories/userRepository');
+
+const getFinishedGameDetail = async (gameId) => {
+  // Buscar la partida por id
+  const game = await gameRepository.findById(gameId);
+  console.log('Fetched game for detail:', game);
+  if (!game || game.status !== 'completed' || !game.winner) {
+    return null;
+  }
+  // Buscar datos del ganador
+  const winner = await userRepository.findById(game.winner);
+  console.log('Fetched winner for game detail:', winner);
+  return {
+    id: game.id,
+    name: game.name,
+    status: game.status,
+    winner: winner ? {
+      id: winner.id,
+      name: winner.name,
+      email: winner.email,
+    } : null,
+  };
+};
+
+module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById, setGameWinner, getFinishedGameDetail };
