@@ -24,6 +24,11 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       allowNull: false,
     },
+    winner: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      defaultValue: null,
+    },
   }, {
     timestamps: true,
     createdAt: 'created_at',

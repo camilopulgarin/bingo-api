@@ -4,12 +4,58 @@ const {
   getUserGames,
   joinGame,
   getPlayerGameInfo,
+  getFinishedGameDetail,
 } = require("../controllers/gameController");
 const { validateGameCreation } = require("../validators/gameValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /games/{gameId}/detail:
+ *   get:
+ *     summary: Obtener el detalle de una partida finalizada
+ *     description: Retorna la información básica de la partida finalizada, incluyendo nombre, estado y datos del ganador (nombre y email).
+ *     tags:
+ *       - Partidas
+ *     parameters:
+ *       - in: path
+ *         name: gameId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: UUID de la partida.
+ *     responses:
+ *       200:
+ *         description: Detalle de la partida obtenida con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ *                 winner:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *       404:
+ *         description: Partida no encontrada o no finalizada.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get('/:gameId/detail', authMiddleware, getFinishedGameDetail);
 /**
  * @swagger
  * /games:
