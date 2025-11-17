@@ -23,6 +23,10 @@ const options = {
         url: 'http://localhost:3000/api/v1', // Cambia según tu entorno
         description: 'Servidor local',
       },
+      {
+        url: 'https://bingo-api-production-18e9.up.railway.app/api/v1', // Cambia según tu entorno
+        description: 'Servidor Producción',
+      },
     ],
   },
   apis: ['./src/app/routes/*.js'], // Ubicación de los archivos con las anotaciones
