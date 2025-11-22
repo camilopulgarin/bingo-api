@@ -21,6 +21,7 @@ const joinGame = async ({ userId, gameId, selectedTables, gameModeVote }) => {
     selected_tables: selectedTables,
     game_mode_vote: gameModeVote,
     board_count: boardCount,
+    status: 'configured',
   });
 
   // Inserta cada tabla en BingoBoard
@@ -59,6 +60,10 @@ const getPlayerGameInfo = async (gameId, userId) => {
 const getBoardById = async (boardId) => {
   return await BingoBoardRepository.findBoardById(boardId);
 };
+// Devuelve la partida por id
+const getGameById = async (gameId) => {
+  return await gameRepository.findById(gameId);
+};
 
 const setGameWinner = async (gameId, winnerId) => {
   console.log('Setting game winner for game:', gameId, 'winner:', winnerId);
@@ -89,4 +94,4 @@ const getFinishedGameDetail = async (gameId) => {
   };
 };
 
-module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById, setGameWinner, getFinishedGameDetail };
+module.exports = { createGame, getUserGames, getPlayerGameInfo, joinGame, getBoardById, setGameWinner, getFinishedGameDetail, getGameById };
