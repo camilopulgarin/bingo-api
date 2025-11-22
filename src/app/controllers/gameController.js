@@ -72,5 +72,21 @@ const getPlayerGameInfo = async (req, res) => {
   }
 };
 
+// Valida si el usuario autenticado es el creador de la partida
+const isCreator = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { gameId } = req.params;
+    const game = await gameService.getGameById(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+    const isCreator = game.creator_id === userId;
+    res.status(200).json({ isCreator });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-module.exports = { createGame, getUserGames, joinGame, getPlayerGameInfo, getFinishedGameDetail };
+
+module.exports = { createGame, getUserGames, joinGame, getPlayerGameInfo, getFinishedGameDetail, isCreator };

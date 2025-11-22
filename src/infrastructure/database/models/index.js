@@ -31,6 +31,10 @@ Game.belongsToMany(User, { through: GameUser, as: 'players', foreignKey: 'game_i
 
 Game.belongsTo(User, { foreignKey: 'creator_id', as: 'creator' });
 
+// Asociación directa para GameUser
+Game.hasMany(GameUser, { as: 'gameUsers', foreignKey: 'game_id' });
+GameUser.belongsTo(Game, { foreignKey: 'game_id', as: 'game' });
+
 // Exportar modelos y conexión
 module.exports = {
   sequelize,

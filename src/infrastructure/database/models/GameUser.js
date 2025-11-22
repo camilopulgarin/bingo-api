@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM('playing', 'won', 'lost'),
+      type: DataTypes.ENUM('playing', 'won', 'lost', 'pending', 'configured', 'completed'),
       defaultValue: 'playing',
     },
     selected_tables: {

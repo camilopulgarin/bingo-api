@@ -5,7 +5,7 @@ const paginate = require('../../utils/paginate');
 const create = async (gameData) => Game.create(gameData);
 
 const addUsersToGame = async (gameId, userIds) => {
-  const gameUsers = userIds.map((userId) => ({ game_id: gameId, user_id: userId }));
+  const gameUsers = userIds.map((userId) => ({ game_id: gameId, user_id: userId, status: 'pending' }));
   await GameUser.bulkCreate(gameUsers);
 };
 
@@ -27,6 +27,13 @@ const findByUserId = async (userId, page, limit) => {
         through: { attributes: [] },
         where: { id: userId },
       },
+      {
+        model: GameUser,
+        as: 'gameUsers',
+        attributes: ['status'],
+        where: { user_id: userId },
+        required: false,
+      },
     ],
   }, page, limit);
 };
@@ -47,7 +54,7 @@ const updateGameUser = async (gameId, userId, fieldsToUpdate) => {
     where: { game_id: gameId, user_id: userId },
   });
 
-  await Game.update({ status: 'configured' }, { where: { id: gameId } });
+  //await Game.update({ status: 'configured' }, { where: { id: gameId } });
 
   return await GameUser.findOne({
     where: { game_id: gameId, user_id: userId },

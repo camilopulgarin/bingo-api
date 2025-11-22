@@ -5,11 +5,46 @@ const {
   joinGame,
   getPlayerGameInfo,
   getFinishedGameDetail,
+  isCreator,
 } = require("../controllers/gameController");
+
+const router = express.Router();
 const { validateGameCreation } = require("../validators/gameValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-const router = express.Router();
+/**
+ * @swagger
+ * /games/{gameId}/is-creator:
+ *   get:
+ *     summary: Verifica si el usuario autenticado es el creador de la partida
+ *     description: Retorna un booleano indicando si el usuario de la sesión es el creador de la partida.
+ *     tags:
+ *       - Partidas
+ *     parameters:
+ *       - in: path
+ *         name: gameId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: UUID de la partida.
+ *     responses:
+ *       200:
+ *         description: Resultado de la validación.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 isCreator:
+ *                   type: boolean
+ *                   description: Indica si el usuario es el creador de la partida.
+ *       404:
+ *         description: Partida no encontrada.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get('/:gameId/is-creator', authMiddleware, isCreator);
 
 /**
  * @swagger
